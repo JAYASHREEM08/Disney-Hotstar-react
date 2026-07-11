@@ -7,7 +7,7 @@ import App from './App.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     {/* Add the basename here if you are using React Router */}
-    <BrowserRouter basename="/DISNEY+HOTSTAR/">
+    <BrowserRouter basename="/Disney-Hotstar-react/">
       <App />
     </BrowserRouter>
   </StrictMode>,
