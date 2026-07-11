@@ -1,18 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  const [query, setQuery] = useState('');
+  const navigate = useNavigate();
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (query.trim()) {
+      navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+    } else {
+      navigate('/search');
+    }
+  };
+
   return (
     <nav className="navbar">
       <div className="left-nav">
-        <div 
-          className="logo" 
-          style={{ cursor: 'pointer' }} 
-          onClick={() => window.location.href = '/'}
-        >
+        <Link to="/" className="logo" style={{ textDecoration: 'none' }}>
           DISNEY+ HOTSTAR
-        </div>
+        </Link>
         <div className="nav-links">
-          <a href="/">Home</a>
+          <Link to="/">Home</Link>
           <a href="#tv">TV</a>
           <a href="#movies">Movies</a>
           <a href="#sports">Sports</a>
@@ -20,19 +29,21 @@ const Navbar = () => {
       </div>
 
       <div className="user-actions">
-        <form action="/detail" method="GET" className="search-box">
+        <form onSubmit={handleSearchSubmit} className="search-box">
           <input 
             type="text" 
             name="q" 
             className="search-input" 
             placeholder="Search movies..." 
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
           />
           <button type="submit" className="nav-btn">Search</button>
         </form>
-        <a href="/profile" className="profile-btn">
+        <Link to="/profile" className="profile-btn">
           <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile" />
           <span>Profile</span>
-        </a>
+        </Link>
       </div>
     </nav>
   );
