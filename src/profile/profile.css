@@ -535,6 +535,17 @@ body{
     font-size:15px;
 }
 
-.back-btn:hover{
-    background:#1d4ed8;
+.back-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.back-btn:hover {
+  background: #1d4ed8;
 }
