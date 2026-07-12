@@ -39,13 +39,14 @@ const Profile = () => {
 
       <div className="profile-content">
 
-    <button
-    className="back-btn"
-    onClick={() => window.history.back()}
->
-    ← Back
-</button>
+        <h1 style={{ color: "red", fontSize: "40px" }}>TEST</h1>
 
+    <button
+  className="back-btn"
+  onClick={() => window.history.back()}
+>
+  ← Back
+</button>
 {renderSection()}
 
       </div>
