@@ -38,7 +38,16 @@ const Profile = () => {
       />
 
       <div className="profile-content">
-        {renderSection()}
+
+    <button
+    className="back-btn"
+    onClick={() => window.history.back()}
+>
+    ← Back
+</button>
+
+{renderSection()}
+
       </div>
     </div>
   );
