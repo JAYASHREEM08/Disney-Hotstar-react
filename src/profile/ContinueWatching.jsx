@@ -1,76 +1,89 @@
-import React, { useState } from "react";
-
-const initialMovies = [
-  {
-    id: 1,
-    title: "Spider-Man: No Way Home",
-    image: "https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
-    remaining: "48 Minutes Left",
-    progress: 65,
-  },
-  {
-    id: 2,
-    title: "Loki - Episode 4",
-    image: "https://image.tmdb.org/t/p/w500/voHUmluYmKyleFkTu3lOXQG702u.jpg",
-    remaining: "60% Completed",
-    progress: 60,
-  },
-  {
-    id: 3,
-    title: "Moon Knight",
-    image: "https://image.tmdb.org/t/p/w500/qpy8WPSQKZw6mY4ZtW3eP2m9xoM.jpg",
-    remaining: "30 Minutes Left",
-    progress: 80,
-  },
-];
+import { useEffect, useState } from "react";
+import { auth } from "../firebase";
+import {
+  getContinueWatching,
+  saveContinueWatching,
+} from "../continueWatchingService";
 
 const ContinueWatching = () => {
-  const [movies, setMovies] = useState(initialMovies);
+  const [movies, setMovies] = useState([]);
 
-  const resumeMovie = (id) => {
+  useEffect(() => {
+    const loadContinueWatching = async () => {
+      if (auth.currentUser) {
+        const data = await getContinueWatching(auth.currentUser.uid);
+        setMovies(data);
+      }
+    };
+
+    loadContinueWatching();
+  }, []);
+
+  const resumeMovie = async (id) => {
+    const movie = movies.find((movie) => movie.id === id);
+
+    if (!movie) return;
+
+    const updatedMovie = {
+      ...movie,
+      progress:
+        movie.progress >= 100
+          ? 100
+          : (movie.progress || 0) + 10,
+    };
+
     setMovies(
-      movies.map((movie) =>
-        movie.id === id
-          ? {
-              ...movie,
-              progress: movie.progress >= 100 ? 100 : movie.progress + 10,
-            }
-          : movie
+      movies.map((item) =>
+        item.id === id ? updatedMovie : item
       )
     );
+
+    if (auth.currentUser) {
+      await saveContinueWatching(
+        auth.currentUser.uid,
+        updatedMovie
+      );
+    }
   };
 
   return (
     <div className="continue-section">
       <h1>Continue Watching</h1>
 
-      <div className="continue-list">
-        {movies.map((movie) => (
-          <div className="continue-card" key={movie.id}>
-            <img src={movie.image} alt={movie.title} />
+      {movies.length === 0 ? (
+        <p>No movies to continue watching.</p>
+      ) : (
+        <div className="continue-list">
+          {movies.map((movie) => (
+            <div className="continue-card" key={movie.id}>
+              <img
+                src={movie.image}
+                alt={movie.title}
+              />
 
-            <div className="continue-info">
-              <h2>{movie.title}</h2>
+              <div className="continue-info">
+                <h2>{movie.title}</h2>
 
-              <p>{movie.remaining}</p>
+                <div className="progress-bar">
+                  <div
+                    className="progress-fill"
+                    style={{
+                      width: `${movie.progress || 0}%`,
+                    }}
+                  ></div>
+                </div>
 
-              <div className="progress-bar">
-                <div
-                  className="progress-fill"
-                  style={{ width: `${movie.progress}%` }}
-                ></div>
+                <button
+                  className="resume-btn"
+                  onClick={() => resumeMovie(movie.id)}
+                >
+                  ▶ Resume Watching
+                </button>
               </div>
-
-              <button
-                className="resume-btn"
-                onClick={() => resumeMovie(movie.id)}
-              >
-                ▶ Resume Watching
-              </button>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
