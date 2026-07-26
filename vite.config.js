@@ -4,5 +4,5 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   plugins: [react()],
-  base: '/DISNEY+HOTSTAR/', // Replace with your actual repository name
+  base:"/Disney-Hotstar-react/", 
 })
