@@ -1,19 +1,36 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import {
   FaUser,
   FaHeart,
+  FaHistory,
   FaPlayCircle,
   FaDownload,
   FaCog,
   FaQuestionCircle,
   FaSignOutAlt,
-  FaCrown,
 } from "react-icons/fa";
 
+import { auth } from "../firebase";
+import { getUserProfile } from "../profileService";
+
 const Sidebar = ({ activeSection, setActiveSection }) => {
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      if (auth.currentUser) {
+        const data = await getUserProfile(auth.currentUser.uid);
+        setProfile(data);
+      }
+    };
+
+    loadProfile();
+  }, []);
+
   const menuItems = [
     { id: "account", name: "Account", icon: <FaUser /> },
     { id: "watchlist", name: "Watchlist", icon: <FaHeart /> },
+    { id: "history", name: "Watch History", icon: <FaHistory /> },
     { id: "continue", name: "Continue Watching", icon: <FaPlayCircle /> },
     { id: "downloads", name: "Downloads", icon: <FaDownload /> },
     { id: "settings", name: "Settings", icon: <FaCog /> },
@@ -21,7 +38,10 @@ const Sidebar = ({ activeSection, setActiveSection }) => {
   ];
 
   const handleLogout = () => {
-    const logout = window.confirm("Are you sure you want to logout?");
+    const logout = window.confirm(
+      "Are you sure you want to logout?"
+    );
+
     if (logout) {
       alert("Logged Out Successfully!");
     }
@@ -29,25 +49,17 @@ const Sidebar = ({ activeSection, setActiveSection }) => {
 
   return (
     <div className="sidebar">
-
       <div className="profile-header">
-        <img
-          src="https://i.pravatar.cc/200?img=12"
-          alt="Profile"
-          className="profile-image"
-        />
-
-        <h2>Peter Parker</h2>
-
-        <p>peterparker@gmail.com</p>
-
-        <div className="premium">
-          <FaCrown /> Premium Annual
+        <div className="profile-image">
+          <FaUser />
         </div>
+
+        <h2>{profile?.name || "User"}</h2>
+
+        <p>{profile?.email || "No email available"}</p>
       </div>
 
       <div className="menu">
-
         {menuItems.map((item) => (
           <div
             key={item.id}
@@ -60,13 +72,11 @@ const Sidebar = ({ activeSection, setActiveSection }) => {
             <span>{item.name}</span>
           </div>
         ))}
-
       </div>
 
       <button className="logout-btn" onClick={handleLogout}>
         <FaSignOutAlt /> Logout
       </button>
-
     </div>
   );
 };
