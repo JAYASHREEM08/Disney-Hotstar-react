@@ -3,6 +3,9 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  plugins: [react()],
-  base:"/Disney-Hotstar-react/", 
-})
+  plugins: [
+    react(),
+    tailwindcss(),
+  ],
+  base: "/Disney-Hotstar-react/",
+});
