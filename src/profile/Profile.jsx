@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Sidebar from "./Sidebar";
 import Account from "./Account";
 import Watchlist from "./Watchlist";
+import WatchHistory from "./WatchHistory";
 import ContinueWatching from "./ContinueWatching";
 import Downloads from "./Downloads";
 import Settings from "./Settings";
@@ -15,16 +16,25 @@ const Profile = () => {
     switch (activeSection) {
       case "account":
         return <Account />;
+
       case "watchlist":
         return <Watchlist />;
+
+      case "history":
+        return <WatchHistory />;
+
       case "continue":
         return <ContinueWatching />;
+
       case "downloads":
         return <Downloads />;
+
       case "settings":
         return <Settings />;
+
       case "help":
         return <HelpCenter />;
+
       default:
         return <Account />;
     }
@@ -38,17 +48,14 @@ const Profile = () => {
       />
 
       <div className="profile-content">
+        <button
+          className="back-btn"
+          onClick={() => window.history.back()}
+        >
+          ← Back
+        </button>
 
-        <h1 style={{ color: "red", fontSize: "40px" }}>TEST</h1>
-
-    <button
-  className="back-btn"
-  onClick={() => window.history.back()}
->
-  ← Back
-</button>
-{renderSection()}
-
+        {renderSection()}
       </div>
     </div>
   );
