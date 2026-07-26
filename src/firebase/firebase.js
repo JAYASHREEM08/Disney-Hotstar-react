@@ -1,19 +1,20 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  apiKey: "AIzaSyB1E3Ztk7MgOLn3pCkA0q6bqwuB_QcwA0Y",
+  authDomain: "disney-hotstar-react-d9aed.firebaseapp.com",
+  projectId: "disney-hotstar-react-d9aed",
+  storageBucket: "disney-hotstar-react-d9aed.firebasestorage.app",
+  messagingSenderId: "95450100846",
+  appId: "1:95450100846:web:4ef4975e058f2974e4e27f",
+  measurementId: "G-XFZHBYCXQX",
 };
 
 const app = initializeApp(firebaseConfig);
 
-export const auth = getAuth(app);
 export const db = getFirestore(app);
+export const auth = getAuth(app);
 
 export default app;
