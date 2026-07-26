@@ -1,47 +1,50 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import { auth } from "../firebase";
+import { getUserProfile } from "../profileService";
 
 const Account = () => {
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      if (auth.currentUser) {
+        const data = await getUserProfile(auth.currentUser.uid);
+        setProfile(data);
+      }
+    };
+
+    loadProfile();
+  }, []);
+
   return (
     <div className="account-section">
       <h1>Account Information</h1>
 
       <div className="info-grid">
-
         <div className="info-card">
           <h3>Full Name</h3>
-          <p>Peter Parker</p>
+          <p>{profile?.name || "User"}</p>
         </div>
 
         <div className="info-card">
           <h3>Email</h3>
-          <p>peterparker@gmail.com</p>
+          <p>{profile?.email || "No email available"}</p>
         </div>
 
         <div className="info-card">
           <h3>Phone</h3>
-          <p>+91 9876543210</p>
+          <p>{profile?.phone || "No phone number"}</p>
         </div>
-
-        <div className="info-card">
-          <h3>Membership</h3>
-          <p>Premium Annual</p>
-        </div>
-
-        <div className="info-card">
-          <h3>Member Since</h3>
-          <p>January 2025</p>
-        </div>
-
-        <div className="info-card">
-          <h3>Active Devices</h3>
-          <p>3 Devices Connected</p>
-        </div>
-
       </div>
 
       <div className="account-actions">
-        <button className="edit-btn">Edit Profile</button>
-        <button className="password-btn">Change Password</button>
+        <button className="edit-btn">
+          Edit Profile
+        </button>
+
+        <button className="password-btn">
+          Change Password
+        </button>
       </div>
     </div>
   );
