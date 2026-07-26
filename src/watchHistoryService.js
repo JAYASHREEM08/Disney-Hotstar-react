@@ -5,7 +5,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 
-import { db } from "./firebase";
+import { db } from "./firebase/firebase";
 
 export const addToWatchHistory = async (userId, movie) => {
   await addDoc(

@@ -5,11 +5,11 @@ import MovieRow from "./MovieRow";
 import Footer from "./Footer";
 import { trendingMovies, kidsShows, popularMovies } from "./data";
 
-const Home = () => {
+const Home = ({ user }) => {
   return (
     <div className="home-container">
       {/* Top Navigation */}
-      <Navbar />
+      <Navbar user={user} />
 
       {/* Featured Movie */}
       <HeroBanner />
@@ -28,5 +28,4 @@ const Home = () => {
   );
 };
 
-export default Home;
 export default Home;

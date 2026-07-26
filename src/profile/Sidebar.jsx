@@ -10,7 +10,7 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 
-import { auth } from "../firebase";
+import { auth } from "../firebase/firebase";
 import { getUserProfile } from "../profileService";
 
 const Sidebar = ({ activeSection, setActiveSection }) => {

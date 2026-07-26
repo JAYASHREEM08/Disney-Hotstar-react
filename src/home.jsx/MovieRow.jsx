@@ -1,4 +1,4 @@
-import { auth } from "../firebase";
+import { auth } from "../firebase/firebase";
 import { addToWatchHistory } from "../watchHistoryService";
 
 const MovieRow = ({ title, movies }) => {
@@ -64,9 +64,5 @@ const MovieRow = ({ title, movies }) => {
     </section>
   );
 };
-
-export default MovieRow;
-
-
 
 export default MovieRow;

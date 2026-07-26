@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { auth } from "../firebase";
+import { auth } from "../firebase/firebase";
 import { getWatchHistory } from "../watchHistoryService";
 
 const WatchHistory = () => {

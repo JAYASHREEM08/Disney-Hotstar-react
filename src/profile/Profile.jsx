@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Account from "./Account";
 import Watchlist from "./Watchlist";
@@ -11,6 +12,7 @@ import "./profile.css";
 
 const Profile = () => {
   const [activeSection, setActiveSection] = useState("account");
+  const navigate = useNavigate();
 
   const renderSection = () => {
     switch (activeSection) {
@@ -50,7 +52,7 @@ const Profile = () => {
       <div className="profile-content">
         <button
           className="back-btn"
-          onClick={() => window.history.back()}
+          onClick={() => navigate('/')}
         >
           ← Back
         </button>

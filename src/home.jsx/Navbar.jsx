@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase/firebase';
 
-const Navbar = () => {
+const Navbar = ({ user }) => {
   const [query, setQuery] = useState('');
   const navigate = useNavigate();
 
@@ -40,10 +42,26 @@ const Navbar = () => {
           />
           <button type="submit" className="nav-btn">Search</button>
         </form>
-        <Link to="/profile" className="profile-btn">
-          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile" />
-          <span>Profile</span>
-        </Link>
+        {user ? (
+          <>
+            <Link to="/profile" className="profile-btn">
+              <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile" />
+              <span>{user.email?.split('@')[0] || 'Profile'}</span>
+            </Link>
+            <button
+              type="button"
+              className="nav-btn"
+              onClick={() => signOut(auth).then(() => navigate('/'))}
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <Link to="/login" className="profile-btn">
+            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile" />
+            <span>Login</span>
+          </Link>
+        )}
       </div>
     </nav>
   );
