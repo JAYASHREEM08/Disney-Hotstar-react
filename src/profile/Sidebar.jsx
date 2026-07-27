@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
 import {
   FaUser,
   FaHeart,
@@ -15,6 +17,7 @@ import { getUserProfile } from "../profileService";
 
 const Sidebar = ({ activeSection, setActiveSection }) => {
   const [profile, setProfile] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -38,13 +41,19 @@ const Sidebar = ({ activeSection, setActiveSection }) => {
     { id: "help", name: "Help Center", icon: <FaQuestionCircle /> },
   ];
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     const logout = window.confirm(
       "Are you sure you want to logout?"
     );
 
     if (logout) {
-      alert("Logged Out Successfully!");
+      try {
+        await signOut(auth);
+        navigate('/login');
+      } catch (error) {
+        console.error("Error logging out:", error);
+        alert("Failed to log out. Please try again.");
+      }
     }
   };
 
