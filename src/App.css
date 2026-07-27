@@ -1,0 +1,18 @@
+/* Add these for your new Movie App structure */
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.movie-card {
+  background-color: #222;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+}
